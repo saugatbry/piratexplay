@@ -336,11 +336,12 @@ Cache is automatically evicted when stale. Maximum 500 entries.
 ## Environment Variables
 
 | Variable | Default | Required | Description |
-|---|---|---|---|
+|---|---|---|---|---|
 | `SITE_URL` | `https://piratexplay.cc` | No | Target website URL |
 | `CACHE_TTL` | `300` | No | Cache TTL in seconds |
 | `RATE_LIMIT_MAX` | `60` | No | Max requests per window |
 | `RATE_LIMIT_WINDOW` | `60000` | No | Rate limit window in ms |
+| `PROXY_URL` | `""` | No | Custom CORS proxy (e.g. `https://corsproxy.io/?url=`). Uses built-in fallbacks if empty. |
 
 ---
 
@@ -352,6 +353,8 @@ Cache is automatically evicted when stale. Maximum 500 entries.
 npm i -g vercel
 vercel --prod
 ```
+
+**Important:** PirateXPlay may block Vercel's IP range. The API auto-falls back to CORS proxies (`corsproxy.io`, `api.allorigins.win`) when it gets a 403. Optionally set `PROXY_URL` in your Vercel environment variables if you prefer a specific proxy.
 
 Set environment variables in the Vercel dashboard if needed.
 
