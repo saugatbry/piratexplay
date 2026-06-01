@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { load } from 'cheerio';
 
 const SITE_URL = process.env.SITE_URL || 'https://piratexplay.cc';
+const PROXY_URL = process.env.PROXY_URL || '';
 
 const BROWSER_HEADERS: Record<string, string> = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
@@ -21,11 +22,9 @@ const BROWSER_HEADERS: Record<string, string> = {
   DNT: '1',
 };
 
-const REFERERS = [
-  'https://www.google.com/',
-  'https://www.google.com/search?q=anime',
-  `${SITE_URL}/`,
-  `${SITE_URL}/home`,
+const CORS_PROXIES = [
+  'https://corsproxy.io/?url=',
+  'https://api.allorigins.win/raw?url=',
 ];
 
 let cookieJar: string = '';
@@ -46,7 +45,7 @@ function getClient(): AxiosInstance {
         config.headers.Cookie = cookieJar;
       }
       if (!config.headers.Referer) {
-        config.headers.Referer = REFERERS[Math.floor(Math.random() * REFERERS.length)];
+        config.headers.Referer = SITE_URL;
       }
       return config;
     });
@@ -78,44 +77,95 @@ function getClient(): AxiosInstance {
   return client;
 }
 
-export async function fetchHTML(
-  url: string,
-  options: AxiosRequestConfig = {}
-): Promise<string> {
-  const fullUrl = url.startsWith('http') ? url : `${SITE_URL}${url}`;
-
-  // First request - visit the root to get cookies
-  if (!cookieJar) {
-    try {
-      const warmup = await getClient().get(SITE_URL, {
-        headers: { ...BROWSER_HEADERS, Referer: 'https://www.google.com/' },
-        timeout: 15000,
-      });
-      const setCookie = warmup.headers['set-cookie'];
-      if (setCookie) {
-        const cookies = Array.isArray(setCookie) ? setCookie : [setCookie];
-        for (const c of cookies) {
-          const name = c.split('=')[0];
-          const value = c.split(';')[0].split('=').slice(1).join('=');
-          cookieJar += (cookieJar ? '; ' : '') + `${name}=${value}`;
-        }
+async function warmupCookies(): Promise<void> {
+  if (cookieJar) return;
+  try {
+    const res = await getClient().get(SITE_URL, {
+      headers: { ...BROWSER_HEADERS, Referer: 'https://www.google.com/' },
+      timeout: 15000,
+    });
+    const setCookie = res.headers['set-cookie'];
+    if (setCookie) {
+      const cookies = Array.isArray(setCookie) ? setCookie : [setCookie];
+      for (const c of cookies) {
+        const name = c.split('=')[0];
+        const value = c.split(';')[0].split('=').slice(1).join('=');
+        cookieJar += (cookieJar ? '; ' : '') + `${name}=${value}`;
       }
-    } catch {
-      // root fetch may also fail, continue with empty cookie jar
     }
+  } catch {
+    // warmup failed, continue without cookies
   }
+}
 
+async function tryDirectFetch(
+  fullUrl: string,
+  options: AxiosRequestConfig
+): Promise<string> {
   const res = await getClient().get<string>(fullUrl, {
     ...options,
     headers: {
       ...BROWSER_HEADERS,
-      Referer: SITE_URL,
       ...(options.headers || {}),
     },
     responseType: 'text',
     transformResponse: [(data) => data],
   });
   return res.data;
+}
+
+async function tryProxyFetch(
+  fullUrl: string,
+  options: AxiosRequestConfig
+): Promise<string> {
+  const userProxy = PROXY_URL;
+  const proxies = userProxy ? [userProxy] : CORS_PROXIES;
+
+  for (const proxy of proxies) {
+    try {
+      const proxyUrl = `${proxy}${encodeURIComponent(fullUrl)}`;
+      const res = await axios.get<string>(proxyUrl, {
+        timeout: 30000,
+        headers: {
+          'User-Agent': BROWSER_HEADERS['User-Agent'],
+          Accept: 'text/html, */*',
+        },
+        responseType: 'text',
+        transformResponse: [(data) => data],
+      });
+
+      const data = res.data;
+      if (data && data.length > 200 && !data.includes('cf-error') && !data.includes('Attention Required')) {
+        return data;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  throw new Error('All proxies failed');
+}
+
+export async function fetchHTML(
+  url: string,
+  options: AxiosRequestConfig = {}
+): Promise<string> {
+  const fullUrl = url.startsWith('http') ? url : `${SITE_URL}${url}`;
+
+  await warmupCookies();
+
+  try {
+    return await tryDirectFetch(fullUrl, options);
+  } catch (directError: any) {
+    if (directError?.response?.status === 403 || directError?.response?.status === 429) {
+      try {
+        return await tryProxyFetch(fullUrl, options);
+      } catch {
+        throw directError;
+      }
+    }
+    throw directError;
+  }
 }
 
 export async function fetchHTMLWithRetry(
