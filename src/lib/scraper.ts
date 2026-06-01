@@ -1,5 +1,5 @@
 import { load, CheerioAPI } from 'cheerio';
-import { fetchHTML, resolveUrl, SITE_URL } from './fetcher';
+import { fetchHTML, fetchHTMLWithRetry, resolveUrl, SITE_URL } from './fetcher';
 import * as cache from './cache';
 import {
   MediaItem, HomeSection, HomeResponse,
@@ -61,7 +61,14 @@ export async function scrapeHome(): Promise<HomeResponse> {
   const cached = cache.get<HomeResponse>('home');
   if (cached) return cached;
 
-  const html = await fetchHTML('/home');
+  const fetched = await fetchHTMLWithRetry(
+    ['/home', '/?s=a', '/category/latest', '/category/popular', '/'],
+    { headers: { Referer: 'https://www.google.com/' } }
+  );
+  const html = fetched?.html || '';
+  if (!html) {
+    return { sections: [] };
+  }
   const $ = load(html);
 
   const sections: HomeSection[] = [];
@@ -84,9 +91,9 @@ export async function scrapeHome(): Promise<HomeResponse> {
     }
   }
 
-  const result: HomeResponse = { sections };
-  cache.set('home', result, undefined, CACHE_TTL);
-  return result;
+  const response: HomeResponse = { sections };
+  cache.set('home', response, undefined, CACHE_TTL);
+  return response;
 }
 
 export async function scrapeSearch(query: string): Promise<SearchResponse> {
@@ -94,7 +101,9 @@ export async function scrapeSearch(query: string): Promise<SearchResponse> {
   const cached = cache.get<SearchResponse>(cacheKey);
   if (cached) return cached;
 
-  const html = await fetchHTML(`/?s=${encodeURIComponent(query)}`);
+  const html = await fetchHTML(`/?s=${encodeURIComponent(query)}`, {
+    headers: { Referer: `${SITE_URL}/home` },
+  });
   const $ = load(html);
 
   const results: SearchResult[] = [];
