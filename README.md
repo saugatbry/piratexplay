@@ -1,22 +1,16 @@
 # PirateXPlay API
 
-Unofficial REST API for [PirateXPlay](https://piratexplay.cc) — a free anime streaming website. Built with **Next.js 15**, **TypeScript**, **Cheerio**, and **Axios**. Deployable directly to **Vercel** serverless functions.
+A REST API that serves anime/movie data from [PirateXPlay](https://piratexplay.cc). Pre-scrapes content from a residential IP, caches it as JSON, and serves it from [Vercel](https://piratexplay.vercel.app) or [Hugging Face](https://saugiiman-piratexplay-api.hf.space).
 
-## Features
+> **Core constraint**: PirateXPlay uses Cloudflare and blocks all server IP ranges. Live scraping from cloud/serverless environments is unreliable. Data must be pre-scraped from a residential network and deployed as cached JSON.
 
-- Scrapes PirateXPlay dynamically — no hardcoded selectors for content layout
-- Auto-discovers every video embed server on episode/movie pages
-- 22+ known embed provider fingerprints (Rubystm, Vidmoly, Gdmirrorbot, etc.)
-- In-memory caching with configurable TTL
-- Per-IP rate limiting with response headers
-- Slug-based IDs — pass clean identifiers like `one-piece-season-1-37854` instead of full URLs
+---
 
 ## Base URL
 
-| Environment | URL |
-|---|---|
-| **Local** | `http://localhost:3000` |
-| **Vercel** | `https://your-project.vercel.app` |
+```
+https://piratexplay.vercel.app
+```
 
 ---
 
@@ -24,324 +18,243 @@ Unofficial REST API for [PirateXPlay](https://piratexplay.cc) — a free anime s
 
 ### `GET /api/home`
 
-Returns sections from the homepage (Latest Series, Latest Movies, Networks, Languages).
+Returns sections (categories) with their media items for the homepage.
 
-**Example:**
-
-```bash
-curl http://localhost:3000/api/home
-```
-
-**Response:**
-
+**Response**:
 ```json
 {
   "sections": [
     {
-      "name": "Latest Series",
+      "name": "Network",
       "items": [
         {
-          "title": "Dr. STONE",
-          "url": "https://piratexplay.cc/series/dr-stone-season-4-86031",
-          "poster": "https://image.tmdb.org/t/p/w500/nKhEks4Lxgv63cyivxnXdtIG1tg.jpg",
-          "type": "Series"
-        }
-      ]
-    },
-    {
-      "name": "Latest Movie",
-      "items": [
-        {
-          "title": "Scarlet (2025)",
-          "url": "https://piratexplay.cc/movies/scarlet-2025-1406657",
-          "poster": "https://image.tmdb.org/t/p/w500/2O2tOyS4kvO9GtFPHpWmbXvfRQv.jpg",
-          "type": "Movie"
+          "title": "Crunchyroll",
+          "url": "https://piratexplay.cc/ott/crunchyroll/",
+          "poster": "https://piratexplay.cc/public/img/ott/crunchyroll-300x300.png",
+          "type": ""
         }
       ]
     }
-  ]
+  ],
+  "_source": "pre-scraped"
 }
 ```
 
+**Usage for an anime site**: Display each `section.name` as a category row. Each `item` links to an info page.
+
 ---
 
-### `GET /api/search?q=<query>`
+### `GET /api/search?q={query}`
 
-Search for anime and movies.
+Search for anime/movies.
 
-**Parameters:**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `q` | Yes | Search query |
 
-| Param | Type | Description |
-|---|---|---|
-| `q` | `string` | Search query (required) |
-
-**Example:**
-
-```bash
-curl "http://localhost:3000/api/search?q=one+piece"
-```
-
-**Response:**
-
+**Response**:
 ```json
 {
   "results": [
     {
-      "title": "One Piece",
-      "url": "https://piratexplay.cc/series/one-piece-season-1-37854",
-      "poster": "https://image.tmdb.org/t/p/w500/9hW62RDq5Dno8vLABXscddjEq9M.jpg",
-      "type": "Series",
-      "tmdbRating": "8.7"
-    },
-    {
-      "title": "One Piece Film Red (2022)",
-      "url": "https://piratexplay.cc/movies/one-piece-film-red-2022-900667",
-      "poster": "https://image.tmdb.org/t/p/w500/ogDXuVkO92GcETZfSofXXemw7gb.jpg",
-      "type": "Movie",
-      "tmdbRating": "7.2"
+      "title": "Demon Slayer",
+      "url": "https://piratexplay.cc/series/demon-slayer-...",
+      "poster": "https://piratexplay.cc/public/img/...",
+      "type": "Series"
     }
   ],
-  "total": 35
+  "total": 23,
+  "_source": "pre-scraped"
 }
 ```
 
+**Usage**: Build a search UI. On submit, call `/api/search?q={input}`. Display results as cards with poster, title, type badge.
+
 ---
 
-### `GET /api/info?id=<slug>`
+### `GET /api/info?id={slug}`
 
-Get detailed information about a series or movie — including description, genres, languages, year, duration, all episodes, and recommendations.
+Get detailed info about a specific anime/movie.
 
-**Parameters:**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Slug or full URL (e.g. `dr-stone-season-4-86031` or `fullmetal-alchemist-brotherhood-season-1-31911`) |
 
-| Param | Type | Description |
-|---|---|---|
-| `id` | `string` | Series or movie slug (required) |
-
-**Slug patterns:**
-
-| Type | Format | Example |
-|---|---|---|
-| Series | `name-season-N-ID` | `one-piece-season-1-37854` |
-| Movie | `name-year-ID` | `one-piece-film-red-2022-900667` |
-
-**Example:**
-
-```bash
-curl "http://localhost:3000/api/info?id=one-piece-season-1-37854"
-```
-
-**Response:**
-
+**Response**:
 ```json
 {
-  "title": "One Piece",
-  "description": "Watch One Piece online for free in HD on PirateXPlay...",
-  "poster": "https://image.tmdb.org/t/p/w185/2rmK7mnchw9Xr3XdiTFSxTTLXqv.jpg",
-  "banner": "https://image.tmdb.org/t/p/w185/2rmK7mnchw9Xr3XdiTFSxTTLXqv.jpg",
-  "genres": ["Action", "Adventure", "Animation", "Comedy", ...],
-  "languages": ["Hindi", "English", "Japanese", "Tamil", ...],
-  "year": "1999",
+  "title": "Fullmetal Alchemist: Brotherhood",
+  "description": "...",
+  "poster": "https://piratexplay.cc/public/img/...",
+  "banner": "https://piratexplay.cc/public/img/...",
+  "genres": ["Action", "Adventure", "Drama", "Fantasy"],
+  "languages": ["English", "Japanese"],
+  "year": "2009",
   "duration": "24 min",
   "seasons": 1,
   "episodes": [
     {
       "season": 1,
       "episode": 1,
-      "title": "Episode 1",
-      "url": "https://piratexplay.cc/episode/one-piece-season-1-37854-1x1/"
+      "title": "Fullmetal Alchemist: Brotherhood Episode 1",
+      "url": "https://piratexplay.cc/series/fullmetal-alchemist-brotherhood-season-1-31911/1x1"
     }
   ],
-  "recommendations": [
-    {
-      "title": "Dr. STONE",
-      "url": "https://piratexplay.cc/series/dr-stone-season-4-86031",
-      "poster": "https://image.tmdb.org/t/p/w185/nKhEks4Lxgv63cyivxnXdtIG1tg.jpg",
-      "type": "Series"
-    }
-  ]
+  "recommendations": [],
+  "_source": "pre-scraped"
 }
 ```
 
----
-
-### `GET /api/episodes?id=<slug>`
-
-Returns only the episode list for a series.
-
-**Parameters:**
-
-| Param | Type | Description |
-|---|---|---|
-| `id` | `string` | Series slug (required) |
-
-**Example:**
-
-```bash
-curl "http://localhost:3000/api/episodes?id=one-piece-season-1-37854"
-```
-
-**Response:**
-
-```json
-[
-  {
-    "season": 1,
-    "episode": 1,
-    "title": "Episode 1",
-    "url": "https://piratexplay.cc/episode/one-piece-season-1-37854-1x1/"
-  },
-  {
-    "season": 1,
-    "episode": 2,
-    "title": "Episode 2",
-    "url": "https://piratexplay.cc/episode/one-piece-season-1-37854-1x2/"
-  }
-]
-```
+**Usage**: Show a detail page with poster, genres, year, episode list. Each episode has a `url` to pass to `/api/watch`.
 
 ---
 
-### `GET /api/watch?id=<slug>`
+### `GET /api/episodes?id={slug}`
 
-Discover all video embed servers for an episode or movie. This is the most important endpoint — it finds every iframe, data-src, and server button on the page.
+Get just the episode list for a title.
 
-**Parameters:**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Slug or full URL |
 
-| Param | Type | Description |
-|---|---|---|
-| `id` | `string` | Episode slug (`name-season-N-ID-NxM`) or movie slug (required) |
+**Response**: Array of episodes (same format as `info.episodes`).
 
-**Episode slug format:** `name-season-N-ID-NxM`
+**Usage**: If you already have the title info but need just the episode list.
 
-```
-one-piece-season-1-37854-1x1
-└─ name ─┘└─season─┘└id─┘└NxM┘
-```
+---
 
-**Example (episode):**
+### `GET /api/watch?id={episodeUrl}`
 
-```bash
-curl "http://localhost:3000/api/watch?id=one-piece-season-1-37854-1x1"
-```
+Get embed sources for a specific episode.
 
-**Example (movie):**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Full episode URL or slug (e.g. `fullmetal-alchemist-brotherhood-season-1-31911/1x1`) |
 
-```bash
-curl "http://localhost:3000/api/watch?id=one-piece-film-red-2022-900667"
-```
-
-**Response:**
-
+**Response** (when pre-scraped):
 ```json
 {
   "success": true,
-  "title": "One Piece 1x1",
+  "title": "Fullmetal Alchemist: Brotherhood Episode 1",
   "sources": [
     {
       "server": "As-cdn21",
-      "embed": "https://piratexplay.cc/proxy/play.php?url=https://as-cdn21.top/video/8757150decbd89b0f5442ca3db4d0e0e"
+      "embed": "https://as-cdn21.top/embed/..."
     },
     {
       "server": "Rubystm",
-      "embed": "https://rubystm.com/e/3hklgq1uj9i6.html"
-    },
-    {
-      "server": "Short",
-      "embed": "https://short.icu/A1JwbC_8e"
-    },
-    {
-      "server": "Animesalt",
-      "embed": "https://animesalt.ac/multi-lang-plyr/player.php?data=..."
+      "embed": "https://rubystm.com/e/..."
     }
   ]
 }
 ```
+
+> **Note**: This endpoint requires pre-scraped data. Live scraping will fail from Vercel/HF due to Cloudflare. See [Pre-scraping](#pre-scraping) below.
+
+**Usage**: Present server buttons to the user. On click, embed the `embed` URL in an iframe or redirect to it. The embed URL plays the video directly.
 
 ---
 
 ### `GET /api/providers`
 
-Returns the list of known embed providers and their domains.
+List all known video providers.
 
-**Example:**
-
-```bash
-curl http://localhost:3000/api/providers
-```
-
-**Response:**
-
+**Response**:
 ```json
 {
   "providers": [
-    { "name": "AS-CDN21", "domains": ["as-cdn21.top"] },
     { "name": "Rubystm", "domains": ["rubystm.com"] },
-    { "name": "Vidmoly", "domains": ["vidmoly.net"] },
-    { "name": "Animesalt", "domains": ["animesalt.ac"] },
-    { "name": "Gdmirrorbot", "domains": ["gdmirrorbot.nl"] }
+    { "name": "Vidmoly", "domains": ["vidmoly.net"] }
   ],
-  "total": 22
+  "total": 20
 }
 ```
 
 ---
 
-## Slug Reference
+### `GET /api/health`
 
-The API automatically detects the content type from the slug pattern:
+Check if pre-scraped data is available and fresh.
 
-| Pattern | Detected Type | Example Slug | Generated URL |
-|---|---|---|---|
-| Contains `-season-N-` + ends with `-NxM` | **episode** | `one-piece-season-1-37854-1x1` | `/episode/one-piece-season-1-37854-1x1/` |
-| Contains `-season-N-` | **series** | `one-piece-season-1-37854` | `/series/one-piece-season-1-37854` |
-| Everything else | **movie** | `one-piece-film-red-2022-900667` | `/movies/one-piece-film-red-2022-900667` |
-
-You can also pass full URLs if needed (e.g., `https://piratexplay.cc/series/one-piece-season-1-37854`).
-
----
-
-## Rate Limiting
-
-All endpoints include rate limiting headers:
-
-| Header | Description |
-|---|---|
-| `X-RateLimit-Limit` | Max requests per window |
-| `X-RateLimit-Remaining` | Requests left in window |
-| `X-RateLimit-Reset` | Seconds until reset |
-
-**Default limits** (configurable via env):
-
-| Variable | Default | Description |
-|---|---|---|
-| `RATE_LIMIT_MAX` | `60` | Max requests per window |
-| `RATE_LIMIT_WINDOW` | `60000` | Window in milliseconds |
-
-When exceeded, the API returns `429 Too Many Requests`.
+**Response**:
+```json
+{
+  "status": "ready",
+  "message": "Pre-scraped data available...",
+  "data": {
+    "home": { "cached": true, "age": "45m", "totalItems": 41 },
+    "popular": { "cached": true }
+  }
+}
+```
 
 ---
 
-## Caching
+## Building an Anime Site (AI Instructions)
 
-Responses are cached in-memory with a configurable TTL:
+### Recommended Architecture
 
-| Variable | Default | Description |
-|---|---|---|
-| `CACHE_TTL` | `300` | Cache duration in seconds (5 minutes) |
+```
+User's Browser
+      │
+      ▼
+Your Website (React/Next.js/Vue)
+      │
+      ├─► PirateXPlay API (data source)
+      │
+      └─► Embed video iframe (from /api/watch sources)
+```
 
-Cache is automatically evicted when stale. Maximum 500 entries.
+### Typical User Flow
+
+1. **Homepage**: Fetch `/api/home` → display sections as horizontal scrollable rows of poster cards
+2. **Search**: User types → `/api/search?q=naruto` → show grid of results
+3. **Info Page**: User clicks a card → `/api/info?id=demon-slayer-...` → show detail with episode list
+4. **Watch**: User clicks an episode → `/api/watch?id=.../1x1` → show server buttons
+5. **Play**: User clicks a server → embed the `embed` URL in an iframe (or open in new tab)
+
+### Key Implementation Details
+
+**Step 4-5 is the most important**: `/api/watch` returns `sources` array. Each source has:
+- `server`: display name (e.g. "Rubystm")
+- `embed`: URL to an iframe embed page
+
+To play: Create an iframe with the `embed` URL. The embed page contains a video player. Some embeds may require a Referer header — the iframe handles this automatically.
+
+### Response Caching
+
+The API has a built-in 2-minute in-memory cache. For your own site, add a CDN or service worker cache on top.
+
+### Error Handling
+
+If an endpoint returns:
+- `503` with `_source: "live"` or `error` field → data not pre-scraped. Pre-scrape it.
+- `429` with `error: "Rate limit exceeded"` → slow down requests (120 req/min)
 
 ---
 
-## Environment Variables
+## Pre-scraping
 
-| Variable | Default | Required | Description |
-|---|---|---|---|---|
-| `SITE_URL` | `https://piratexplay.cc` | No | Target website URL |
-| `CACHE_TTL` | `300` | No | Cache TTL in seconds |
-| `RATE_LIMIT_MAX` | `60` | No | Max requests per window |
-| `RATE_LIMIT_WINDOW` | `60000` | No | Rate limit window in ms |
-| `PROXY_URL` | `""` | No | Custom CORS proxy (e.g. `https://corsproxy.io/?url=`). Uses built-in fallbacks if empty. |
+Since Cloudflare blocks all server-based requests, you must pre-scrape from a **residential IP**.
+
+### One-time
+
+```bash
+node scripts/refresh.mjs
+```
+
+This fetches pages from PirateXPlay and writes JSON files to `public/data/`.
+
+### Customize what to scrape
+
+Edit `scripts/refresh.mjs` to add more search queries or info pages.
+
+### What gets pre-scraped
+
+- `/api/home` → `public/data/home.json` (sections + items)
+- `/api/search?q=...` → `public/data/search-{query}.json`
+- `/api/info?id=...` → `public/data/info-{slug}.json`
+- `/api/watch?id=...` → `public/data/watch-{slug}.json` (if configured)
 
 ---
 
@@ -350,21 +263,90 @@ Cache is automatically evicted when stale. Maximum 500 entries.
 ### Vercel
 
 ```bash
-npm i -g vercel
-vercel --prod
+git push origin master
 ```
 
-**Important:** PirateXPlay may block Vercel's IP range. The API auto-falls back to CORS proxies (`corsproxy.io`, `api.allorigins.win`) when it gets a 403. Optionally set `PROXY_URL` in your Vercel environment variables if you prefer a specific proxy.
+Auto-deploys if Vercel is connected to your GitHub repo. The `next.config.js` uses `output: 'standalone'`.
 
-Set environment variables in the Vercel dashboard if needed.
-
-### Manual
+### Hugging Face Spaces
 
 ```bash
-git clone <repo>
-cd piratexplay-api
-npm install
-npm run dev
+git push https://huggingface.co/spaces/{username}/{space} master
+```
+
+The Dockerfile in `huggingface/` is minimal (no Chromium, no Playwright).
+
+---
+
+## Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `SITE_URL` | `https://piratexplay.cc` | Target site |
+| `CACHE_TTL` | `300` | In-memory cache TTL (seconds) |
+| `RATE_LIMIT_MAX` | `120` | Max requests per window |
+| `RATE_LIMIT_WINDOW` | `60000` | Rate limit window (ms) |
+| `LOG_LEVEL` | `info` | `debug`, `info`, `warn`, `error` |
+
+---
+
+## Current Data Status
+
+| Endpoint | Pre-scraped | Items |
+|----------|-------------|-------|
+| `/api/home` | ✅ | 41 items across 4 sections |
+| `/api/search?q=anime` | ✅ | 20+ results |
+| `/api/search?q=naruto` | ✅ | Available |
+| `/api/search?q=one+piece` | ✅ | Available |
+| `/api/search?q=demon+slayer` | ✅ | 23 results |
+| `/api/search?q=attack+on+titan` | ✅ | Available |
+| `/api/search?q=jujutsu` | ✅ | Available |
+| `/api/search?q=dragon+ball` | ✅ | Available |
+| `/api/search?q=series` | ✅ | Available |
+| `/api/search?q=movie` | ✅ | Available |
+| `/api/info?=dr-stone-season-4` | ✅ | 36 episodes |
+| `/api/info?=fullmetal-alchemist-brotherhood` | ✅ | 36 episodes |
+| `/api/watch` | ❌ | Needs pre-scraping |
+
+---
+
+## Full Example: Building a Working Anime Site
+
+### 1. Fetch Homepage Data
+```javascript
+const home = await fetch('https://piratexplay.vercel.app/api/home').then(r => r.json())
+// home.sections → [{ name, items }]
+```
+
+### 2. Render Section
+```jsx
+{home.sections.map(section => (
+  <div key={section.name}>
+    <h2>{section.name}</h2>
+    <div className="row">
+      {section.items.map(item => (
+        <a key={item.url} href={`/info?url=${encodeURIComponent(item.url)}`}>
+          <img src={item.poster} alt={item.title} />
+          <span>{item.title}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+))}
+```
+
+### 3. Info Page → Episode List
+```javascript
+const info = await fetch(`/api/info?id=${slug}`).then(r => r.json())
+// info.episodes → [{ season, episode, title, url }]
+```
+
+### 4. Watch Page → Embed Player
+```javascript
+const watch = await fetch(`/api/watch?id=${episodeSlug}`).then(r => r.json())
+// watch.sources → [{ server, embed }]
+// Render iframe with embed URL
+<iframe src={watch.sources[0].embed} allowFullScreen />
 ```
 
 ---
@@ -373,51 +355,27 @@ npm run dev
 
 ```
 src/
-├── app/
-│   ├── api/
-│   │   ├── home/route.ts        # GET /api/home
-│   │   ├── search/route.ts      # GET /api/search?q=
-│   │   ├── info/route.ts        # GET /api/info?id=
-│   │   ├── episodes/route.ts    # GET /api/episodes?id=
-│   │   ├── watch/route.ts       # GET /api/watch?id=
-│   │   └── providers/route.ts   # GET /api/providers
-│   ├── layout.tsx
-│   └── page.tsx
+├── app/api/
+│   ├── home/route.ts         GET /api/home
+│   ├── search/route.ts       GET /api/search?q=
+│   ├── info/route.ts         GET /api/info?id=
+│   ├── episodes/route.ts     GET /api/episodes?id=
+│   ├── watch/route.ts        GET /api/watch?id=
+│   ├── providers/route.ts    GET /api/providers
+│   ├── health/route.ts       GET /api/health
+│   └── debug/                Debug utilities
 ├── lib/
-│   ├── fetcher.ts               # Axios HTTP client
-│   ├── cache.ts                 # In-memory TTL cache
-│   ├── rate-limit.ts            # Per-IP rate limiter
-│   ├── parser.ts                # Cheerio DOM helpers
-│   ├── scraper.ts               # Site scraping logic
-│   ├── extractor.ts             # Embed-to-video extraction
-│   └── providers/
-│       └── index.ts             # Provider extraction
-├── types/
-│   └── index.ts                 # TypeScript interfaces
-└── utils/
-    ├── slug.ts                  # Slug type detection
-    └── fingerprint.ts           # Provider auto-detection
+│   ├── fetcher.ts            Axios + Webshare proxy rotation
+│   ├── scraper.ts            Cheerio-based HTML parser
+│   ├── data.ts               Read/write pre-scraped JSON
+│   ├── cache.ts              In-memory cache
+│   ├── cloudflare.ts         Cloudflare detection
+│   ├── rate-limit.ts         Rate limiting
+│   ├── logger.ts             Structured logging
+│   ├── extractor.ts          Video source extraction
+│   └── providers/index.ts    Provider-specific extraction
+├── utils/
+│   ├── slug.ts               URL/slug normalization
+│   └── fingerprint.ts        Provider fingerprint database
+└── types/index.ts            TypeScript type definitions
 ```
-
----
-
-## Known Embed Providers
-
-The API automatically detects these embed providers:
-
-As-cdn21, Rubystm, PirateXPlay Proxy, Short, Cloudy, Strmup, Turbovidhls, Vidmoly, Animesalt, Vidstreaming, Gdmirrorbot, YouTube, DoodStream, Filemoon, StreamTape, Mp4Upload, VidCloud, SuperEmbed, Hydrax, VidSrc
-
-New providers are detected automatically by domain and HTML pattern matching.
-
----
-
-## Notes
-
-- This is an **unofficial** API — not affiliated with PirateXPlay
-- The `/api/extract` endpoint has been removed; use `/api/watch` to get embed URLs
-- Embed pages often use JavaScript-based players — the extractor makes a best-effort attempt but some providers may not yield direct `.m3u8`/`.mp4` URLs without a headless browser
-- Rate limits are per-IP and in-memory (reset on server restart)
-
-## License
-
-MIT
