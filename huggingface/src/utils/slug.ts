@@ -27,3 +27,14 @@ export function normalizeId(id: string): string {
   }
   return slugToUrl(id.replace(/^\//, ''));
 }
+
+export function slugFromUrl(urlOrSlug: string): string | null {
+  try {
+    const parts = urlOrSlug.split('/').filter(Boolean);
+    const last = parts[parts.length - 1];
+    if (last && last.length > 5 && last.length < 200) return last;
+    return parts[parts.length - 2] || null;
+  } catch {
+    return urlOrSlug.includes('-') ? urlOrSlug : null;
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "title": "Language: Korean",
+  "description": "",
+  "poster": "https://image.tmdb.org/t/p/w500/9ZWsJVgJ5xEhP6ycBRyKwznYdI1.jpg",
+  "banner": "https://image.tmdb.org/t/p/w500/9ZWsJVgJ5xEhP6ycBRyKwznYdI1.jpg",
+  "genres": [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Comedy",
+    "Crime",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Horror",
+    "Kids",
+    "Martial ART",
+    "Mystery",
+    "Romance",
+    "Sci-fi",
+    "Sci-Fi & Fantasy",
+    "Superhero",
+    "Thriller",
+    "War"
+  ],
+  "year": "",
+  "duration": "",
+  "seasons": 0,
+  "episodes": [],
+  "recommendations": [],
+  "fetchedAt": "2026-06-01T11:57:13.167Z"
+}

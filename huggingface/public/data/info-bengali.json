@@ -1,0 +1,32 @@
+{
+  "title": "Language: Bengali",
+  "description": "",
+  "poster": "https://image.tmdb.org/t/p/w500/pgL3pJEPv1K4Bb1isw5PFlA1MJ3.jpg",
+  "banner": "https://image.tmdb.org/t/p/w500/pgL3pJEPv1K4Bb1isw5PFlA1MJ3.jpg",
+  "genres": [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Comedy",
+    "Crime",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Horror",
+    "Kids",
+    "Martial ART",
+    "Mystery",
+    "Romance",
+    "Sci-fi",
+    "Sci-Fi & Fantasy",
+    "Superhero",
+    "Thriller",
+    "War"
+  ],
+  "year": "",
+  "duration": "",
+  "seasons": 0,
+  "episodes": [],
+  "recommendations": [],
+  "fetchedAt": "2026-06-01T11:57:11.444Z"
+}

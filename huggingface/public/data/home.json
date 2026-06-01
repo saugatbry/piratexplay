@@ -1,0 +1,271 @@
+{
+  "sections": [
+    {
+      "name": "Network",
+      "items": [
+        {
+          "title": "Cartoon Network",
+          "url": "https://piratexplay.cc/category/animation/",
+          "poster": "https://piratexplay.cc/public/img/ott/cartoonnetwork-300x300.png",
+          "type": ""
+        },
+        {
+          "title": "Crunchyroll",
+          "url": "https://piratexplay.cc/ott/crunchyroll/",
+          "poster": "https://piratexplay.cc/public/img/ott/crunchyroll-300x300.png",
+          "type": ""
+        },
+        {
+          "title": "Disney Plus",
+          "url": "https://piratexplay.cc/category/drama/",
+          "poster": "https://piratexplay.cc/public/img/ott/disney-300x300.png",
+          "type": ""
+        },
+        {
+          "title": "Disney+ Hotstar",
+          "url": "https://piratexplay.cc/ott/disney-plus/",
+          "poster": "https://piratexplay.cc/public/img/ott/hotstar-300x300.png",
+          "type": ""
+        },
+        {
+          "title": "Hungama",
+          "url": "https://piratexplay.cc/category/anime/",
+          "poster": "https://piratexplay.cc/public/img/ott/hungama-300x300.png",
+          "type": ""
+        },
+        {
+          "title": "Netflix",
+          "url": "https://piratexplay.cc/ott/netflix/",
+          "poster": "https://piratexplay.cc/public/img/ott/netflix-300x300.png",
+          "type": ""
+        },
+        {
+          "title": "Amazon Prime Video",
+          "url": "https://piratexplay.cc/ott/amazon-prime-video/",
+          "poster": "https://piratexplay.cc/public/img/ott/primevideo-300x300.png",
+          "type": ""
+        },
+        {
+          "title": "Sony Yay",
+          "url": "https://piratexplay.cc/category/comedy/",
+          "poster": "https://piratexplay.cc/public/img/ott/sonyay-300x300.png",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "name": "Stream in Your Language",
+      "items": [
+        {
+          "title": "PirateXPlay - Hindi Dub",
+          "url": "https://piratexplay.cc/language/hindi/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Hin-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - Tamil Dub",
+          "url": "https://piratexplay.cc/language/tamil/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Tam-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - Telugu Dub",
+          "url": "https://piratexplay.cc/language/telugu/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Tel-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - Malayalam Dub",
+          "url": "https://piratexplay.cc/language/malayalam/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Mal-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - Kannada Dub",
+          "url": "https://piratexplay.cc/language/kannada/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Kan-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - Bengali Dub",
+          "url": "https://piratexplay.cc/language/bengali/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Ben-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - English Dub",
+          "url": "https://piratexplay.cc/language/english/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Eng-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - Japanese Dub",
+          "url": "https://piratexplay.cc/language/japaneses/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Jap-209x300.png",
+          "type": ""
+        },
+        {
+          "title": "PirateXPlay - Korean Dub",
+          "url": "https://piratexplay.cc/language/korean/",
+          "poster": "https://piratexplay.cc/public/img/languages/Pos_Kor-209x300.png",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "name": "Latest Series",
+      "items": [
+        {
+          "title": "Dr. STONE",
+          "url": "https://piratexplay.cc/series/dr-stone-season-4-86031",
+          "poster": "https://image.tmdb.org/t/p/w500/nKhEks4Lxgv63cyivxnXdtIG1tg.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Scum of the Brave",
+          "url": "https://piratexplay.cc/series/scum-of-the-brave-season-1-284432",
+          "poster": "https://image.tmdb.org/t/p/w500/maJVWcgwzqEjnPXvfkiOjpR1pFy.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Fullmetal Alchemist: Brotherhood",
+          "url": "https://piratexplay.cc/series/fullmetal-alchemist-brotherhood-season-1-31911",
+          "poster": "https://image.tmdb.org/t/p/w500/q7BlNJRNXRwkm5YGGLzxJATcbYs.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Captain Tsubasa",
+          "url": "https://piratexplay.cc/series/captain-tsubasa-season-1-77240",
+          "poster": "https://image.tmdb.org/t/p/w500/5ebcN4fDDk9QdGTvVrD7TIa18za.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "NIPPON SANGOKU: The Three Nations of the Crimson Sun",
+          "url": "https://piratexplay.cc/series/nippon-sangoku-the-three-nations-of-the-crimson-sun-season-1-312474",
+          "poster": "https://image.tmdb.org/t/p/w500/sM7zYE6xOmaNwC28LR7cEneAtuN.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Daemons of the Shadow Realm",
+          "url": "https://piratexplay.cc/series/daemons-of-the-shadow-realm-season-1-260463",
+          "poster": "https://image.tmdb.org/t/p/w500/vIE1llfr1lcmzlsV4xn8vhgtlQN.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "The Ramparts of Ice",
+          "url": "https://piratexplay.cc/series/the-ramparts-of-ice-season-1-283428",
+          "poster": "https://image.tmdb.org/t/p/w500/96tnzySFpwLxp27Xc5CCi0fkRsx.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Agents of the Four Seasons Dance of Spring",
+          "url": "https://piratexplay.cc/series/agents-of-the-four-seasons-dance-of-spring-season-1-288659",
+          "poster": "https://image.tmdb.org/t/p/w500/s5g6To6L1nZiPfr5TYpaahE4rlx.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Easygoing Territory Defense by the Optimistic Lord",
+          "url": "https://piratexplay.cc/series/easygoing-territory-defense-by-the-optimistic-lord-season-1-288589",
+          "poster": "https://image.tmdb.org/t/p/w500/2ctXv1LyyVad5VLToS1t2ZqSCQa.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "The Summer Hikaru Died",
+          "url": "https://piratexplay.cc/series/the-summer-hikaru-died-season-1-278196",
+          "poster": "https://image.tmdb.org/t/p/w500/6nfYZHuFdtNtKFRGeXoc6Q8lDXa.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Release that Witch",
+          "url": "https://piratexplay.cc/series/release-that-witch-season-1-298026",
+          "poster": "https://image.tmdb.org/t/p/w500/6ZfiXCxh28by13SW4pDmRTVHoOA.jpg",
+          "type": "Series"
+        },
+        {
+          "title": "Grand Blue Dreaming",
+          "url": "https://piratexplay.cc/series/grand-blue-dreaming-season-1-79166",
+          "poster": "https://image.tmdb.org/t/p/w500/wvM8NATiU0wkVGqQZiu7iJQtBbs.jpg",
+          "type": "Series"
+        }
+      ]
+    },
+    {
+      "name": "Latest Movie",
+      "items": [
+        {
+          "title": "Scarlet (2025)",
+          "url": "https://piratexplay.cc/movies/scarlet-2025-1406657",
+          "poster": "https://image.tmdb.org/t/p/w500/2O2tOyS4kvO9GtFPHpWmbXvfRQv.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Girls und Panzer das Finale: Part 1 (2017)",
+          "url": "https://piratexplay.cc/movies/girls-und-panzer-das-finale-part-1-2017-474659",
+          "poster": "https://image.tmdb.org/t/p/w500/p4HIfKM5Qw1458NLm7YKuYMTJQK.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Girls und Panzer das Finale: Part 2 (2019)",
+          "url": "https://piratexplay.cc/movies/girls-und-panzer-das-finale-part-2-2019-496891",
+          "poster": "https://image.tmdb.org/t/p/w500/2UPHyMm8fE22yvTFVGu1LW2nVF0.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Ben 10: Alien X-Tinction (2021)",
+          "url": "https://piratexplay.cc/movies/ben-10-alien-x-tinction-2021-882878",
+          "poster": "https://image.tmdb.org/t/p/w500/pgL3pJEPv1K4Bb1isw5PFlA1MJ3.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Ben 10: Ben 10,010 (2021)",
+          "url": "https://piratexplay.cc/movies/ben-10-ben-10-010-2021-834802",
+          "poster": "https://image.tmdb.org/t/p/w500/6aDh4yH5FHaMfjdsqw4n97rl7FJ.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Swapped (2026)",
+          "url": "https://piratexplay.cc/movies/swapped-2026-1007757",
+          "poster": "https://image.tmdb.org/t/p/w500/tHhxWxge06goXU6ZQH1hj7vK8Hd.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Ramayana: The Legend of Prince Rama (1992)",
+          "url": "https://piratexplay.cc/movies/ramayana-the-legend-of-prince-rama-1992-84092",
+          "poster": "https://image.tmdb.org/t/p/w500/jnwUw88Zq5tS0BFNvDwhISQ7p8Y.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Tokyo Ghoul: PINTO (2015)",
+          "url": "https://piratexplay.cc/movies/tokyo-ghoul-pinto-2015-1578514",
+          "poster": "https://image.tmdb.org/t/p/w500/vSV7XFggsw24KZAqXwAmYDFlkn9.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Fatal Fury 2: The New Battle (1993)",
+          "url": "https://piratexplay.cc/movies/fatal-fury-2-the-new-battle-1993-72016",
+          "poster": "https://image.tmdb.org/t/p/w500/y4EuF7jGgAWJirjqzEAJTk3T3Uq.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "ODDTAXI in the Woods (2022)",
+          "url": "https://piratexplay.cc/movies/oddtaxi-in-the-woods-2022-919609",
+          "poster": "https://image.tmdb.org/t/p/w500/bVlsvEB7tHPKTPLQmVd1sVecD0K.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Miraculous World: New York, United HeroeZ (2020)",
+          "url": "https://piratexplay.cc/movies/miraculous-world-new-york-united-heroez-2020-755812",
+          "poster": "https://image.tmdb.org/t/p/w500/9YbyvcrHmY2SVbdfXpb8mC4Fy0g.jpg",
+          "type": "Movie"
+        },
+        {
+          "title": "Miraculous World: Shanghai – The Legend of Ladydragon (2021)",
+          "url": "https://piratexplay.cc/movies/miraculous-world-shanghai-the-legend-of-ladydragon-2021-726684",
+          "poster": "https://image.tmdb.org/t/p/w500/msI5a9TPnepx47JUb2vl88hb80R.jpg",
+          "type": "Movie"
+        }
+      ]
+    }
+  ],
+  "fetchedAt": "2026-06-01T11:56:59.003Z"
+}

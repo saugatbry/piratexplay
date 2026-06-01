@@ -144,7 +144,7 @@ export async function extractFromEmbed(embedUrl: string): Promise<{
 }> {
   const provider = detectProviderByDomain(embedUrl);
   try {
-    const html = await fetchHTML(embedUrl, { headers: { Referer: embedUrl } });
+    const html = await fetchHTML(embedUrl);
     const baseUrl = embedUrl;
 
     const [m3u8, mp4, videoTag, config, obfu, subs] = await Promise.all([
@@ -178,7 +178,7 @@ export async function resolveIframeChain(embedUrls: string[], maxDepth = 3): Pro
     let currentUrl = url;
     for (let depth = 0; depth < maxDepth; depth++) {
       try {
-        const html = await fetchHTML(currentUrl, { headers: { Referer: currentUrl } });
+        const html = await fetchHTML(currentUrl);
         const $ = load(html);
         const iframes = $('iframe[src]');
         if (iframes.length === 0) {

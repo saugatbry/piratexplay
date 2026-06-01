@@ -1,0 +1,125 @@
+{
+  "items": [
+    {
+      "title": "Cartoon Network",
+      "url": "https://piratexplay.cc/category/animation/",
+      "poster": "https://piratexplay.cc/public/img/ott/cartoonnetwork-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "Crunchyroll",
+      "url": "https://piratexplay.cc/ott/crunchyroll/",
+      "poster": "https://piratexplay.cc/public/img/ott/crunchyroll-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "Disney Plus",
+      "url": "https://piratexplay.cc/category/drama/",
+      "poster": "https://piratexplay.cc/public/img/ott/disney-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "Disney+ Hotstar",
+      "url": "https://piratexplay.cc/ott/disney-plus/",
+      "poster": "https://piratexplay.cc/public/img/ott/hotstar-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "Hungama",
+      "url": "https://piratexplay.cc/category/anime/",
+      "poster": "https://piratexplay.cc/public/img/ott/hungama-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "Netflix",
+      "url": "https://piratexplay.cc/ott/netflix/",
+      "poster": "https://piratexplay.cc/public/img/ott/netflix-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "Amazon Prime Video",
+      "url": "https://piratexplay.cc/ott/amazon-prime-video/",
+      "poster": "https://piratexplay.cc/public/img/ott/primevideo-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "Sony Yay",
+      "url": "https://piratexplay.cc/category/comedy/",
+      "poster": "https://piratexplay.cc/public/img/ott/sonyay-300x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Hindi Dub",
+      "url": "https://piratexplay.cc/language/hindi/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Hin-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Tamil Dub",
+      "url": "https://piratexplay.cc/language/tamil/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Tam-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Telugu Dub",
+      "url": "https://piratexplay.cc/language/telugu/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Tel-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Malayalam Dub",
+      "url": "https://piratexplay.cc/language/malayalam/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Mal-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Kannada Dub",
+      "url": "https://piratexplay.cc/language/kannada/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Kan-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Bengali Dub",
+      "url": "https://piratexplay.cc/language/bengali/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Ben-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - English Dub",
+      "url": "https://piratexplay.cc/language/english/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Eng-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Japanese Dub",
+      "url": "https://piratexplay.cc/language/japaneses/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Jap-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "PirateXPlay - Korean Dub",
+      "url": "https://piratexplay.cc/language/korean/",
+      "poster": "https://piratexplay.cc/public/img/languages/Pos_Kor-209x300.png",
+      "type": ""
+    },
+    {
+      "title": "Dr. STONE",
+      "url": "https://piratexplay.cc/series/dr-stone-season-4-86031",
+      "poster": "https://image.tmdb.org/t/p/w500/nKhEks4Lxgv63cyivxnXdtIG1tg.jpg",
+      "type": "Series"
+    },
+    {
+      "title": "Scum of the Brave",
+      "url": "https://piratexplay.cc/series/scum-of-the-brave-season-1-284432",
+      "poster": "https://image.tmdb.org/t/p/w500/maJVWcgwzqEjnPXvfkiOjpR1pFy.jpg",
+      "type": "Series"
+    },
+    {
+      "title": "Fullmetal Alchemist: Brotherhood",
+      "url": "https://piratexplay.cc/series/fullmetal-alchemist-brotherhood-season-1-31911",
+      "poster": "https://image.tmdb.org/t/p/w500/q7BlNJRNXRwkm5YGGLzxJATcbYs.jpg",
+      "type": "Series"
+    }
+  ],
+  "fetchedAt": "2026-06-01T11:57:06.730Z"
+}

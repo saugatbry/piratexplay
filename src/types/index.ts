@@ -13,6 +13,8 @@ export interface HomeSection {
 
 export interface HomeResponse {
   sections: HomeSection[];
+  debug?: FetchDebugInfo;
+  _scrapeLog?: string[];
 }
 
 export interface SearchResult extends MediaItem {
@@ -22,6 +24,8 @@ export interface SearchResult extends MediaItem {
 export interface SearchResponse {
   results: SearchResult[];
   total: number;
+  debug?: FetchDebugInfo;
+  _scrapeLog?: string[];
 }
 
 export interface EpisodeInfo {
@@ -43,6 +47,7 @@ export interface InfoResponse {
   seasons: number;
   episodes: EpisodeInfo[];
   recommendations: MediaItem[];
+  debug?: FetchDebugInfo;
 }
 
 export interface VideoSource {
@@ -54,6 +59,7 @@ export interface WatchResponse {
   success: boolean;
   title: string;
   sources: VideoSource[];
+  debug?: FetchDebugInfo;
 }
 
 export interface MediaSource {
@@ -78,4 +84,39 @@ export interface ExtractResponse {
 export interface ProxyConfig {
   url: string;
   headers: Record<string, string>;
+}
+
+export interface FetchResult {
+  html: string;
+  strategy: string;
+  status: number;
+  timeMs: number;
+  cloudflareDetected: boolean;
+  error?: string;
+  _finalUrl?: string;
+  _cacheUrl?: string;
+  _errorDetail?: string;
+}
+
+export interface FetchDebugInfo {
+  url: string;
+  strategy: string;
+  status: number;
+  timeMs: number;
+  cloudflareDetected: boolean;
+  htmlLength: number;
+  cacheHit: boolean;
+}
+
+export interface ScrapeValidation {
+  valid: boolean;
+  reason?: string;
+  htmlLength: number;
+  cloudflareDetected: boolean;
+}
+
+export interface ScrapeError {
+  success: false;
+  error: string;
+  debug?: FetchDebugInfo;
 }
